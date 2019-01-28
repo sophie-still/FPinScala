@@ -23,7 +23,7 @@ object List { // `List` companion object. Contains functions for creating and wo
     if (as.isEmpty) Nil
     else Cons(as.head, apply(as.tail: _*))
 
-  val x = List(1,2,3,4,5) match {
+  val x: Int = List(1,2,3,4,5) match {
     case Cons(x, Cons(2, Cons(4, _))) => x
     case Nil => 42
     case Cons(x, Cons(y, Cons(3, Cons(4, _)))) => x + y
@@ -50,7 +50,10 @@ object List { // `List` companion object. Contains functions for creating and wo
     foldRight(ns, 1.0)(_ * _) // `_ * _` is more concise notation for `(x,y) => x * y`; see sidebar
 
 
-  def tail[A](l: List[A]): List[A] = ???
+  def tail[A](l: List[A]): List[A] = l match {
+    case Nil ⇒ Nil
+    case Cons(_, y) ⇒ y
+  }
 
   def setHead[A](l: List[A], h: A): List[A] = ???
 
@@ -65,4 +68,16 @@ object List { // `List` companion object. Contains functions for creating and wo
   def foldLeft[A,B](l: List[A], z: B)(f: (B, A) => B): B = ???
 
   def map[A,B](l: List[A])(f: A => B): List[B] = ???
+}
+object Test {
+  import List._
+  // Some examples of anonymous functions:
+  def main(args: Array[String]): Unit = {
+    println (List.x)
+    println (tail(List(1,2,3,4)))
+
+//    println(drop(List(1,2,3,4),5))
+//    println(dropWhile[Int](List(1,2,3,4), _ < 3))
+
+  }
 }
