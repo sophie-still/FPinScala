@@ -53,16 +53,40 @@ object List { // `List` companion object. Contains functions for creating and wo
   def tail[A](l: List[A]): List[A] = l match {
     case Nil ⇒ Nil
     case Cons(_, y) ⇒ y
+  } //3.2
+
+  def setHead[A](l: List[A], h: A): List[A] = l match {
+    case Nil => List(h)
+    case Cons(_,y) => Cons(h,tail(l))
+  } //3.3
+
+  def drop[A](l: List[A], n: Int): List[A] = {
+    val i=1
+    if (i<=n){
+      drop(tail(l),n-1)
+    }
+    else {l}
+  } //3.4
+
+  def dropWhile[A](l: List[A], f: A => Boolean): List[A] = {
+    l match {
+      case Nil => Nil
+      case Cons(h, t) => {
+        if (f(h)) dropWhile(t, f)
+        else l
+      }
+    }
+    //3.5 you can use 'if (f(h))' without saying if (f(h) = true)
+    //if (f(h)) is asking if it is satisfied
   }
-
-  def setHead[A](l: List[A], h: A): List[A] = ???
-
-  def drop[A](l: List[A], n: Int): List[A] = ???
-
-  def dropWhile[A](l: List[A], f: A => Boolean): List[A] = ???
-
-  def init[A](l: List[A]): List[A] = ???
-
+  def init[A](l: List[A]): List[A] = {
+    l match {
+      case Nil => Nil
+      case Cons(h, t) =>
+    }
+l
+  }
+    //3.6
   def length[A](l: List[A]): Int = ???
 
   def foldLeft[A,B](l: List[A], z: B)(f: (B, A) => B): B = ???
@@ -73,11 +97,16 @@ object Test {
   import List._
   // Some examples of anonymous functions:
   def main(args: Array[String]): Unit = {
-    println (List.x)
-    println (tail(List(1,2,3,4)))
-
+//    println (List.x)
+    println("List = (1,2,3,4)")
+    println("The tail is: " + tail(List(1,2,3,4)))
+    println("Set head as 5: " + {setHead(List(1,2,3,4),5)})
+    println(drop(List(),3))
 //    println(drop(List(1,2,3,4),5))
 //    println(dropWhile[Int](List(1,2,3,4), _ < 3))
-
+    println(dropWhile[Int](List(1,2,3,4,5), _ < 3))
+    println(dropWhile[Int](List(1,2,3,4,5), _ % 2 == 0))
+    println(dropWhile[Int](List(1,2,3,1,2), _ < 3))
+    println("drop last element = " + init(List(1,2,3,4)))
   }
 }
